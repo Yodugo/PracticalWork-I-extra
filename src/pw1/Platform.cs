@@ -12,7 +12,7 @@ namespace PwI_Extra
         public string id;
         public PlatformStatus status;
         public Train currentTrain;
-        public int dockingTime;
+        public int dockingTime = 2;
 
         public Platform(string id, PlatformStatus status, Train currentTrain, int dockingTime)
         {

@@ -20,6 +20,7 @@ namespace PwI_Extra
                 Console.WriteLine("| 3. Exit                             |");
                 Console.WriteLine("|                                     |");
                 Console.WriteLine("|-------------------------------------|");
+                Console.WriteLine();
 
                 Console.Write("Choose your option: ");
 
@@ -40,6 +41,7 @@ namespace PwI_Extra
                     case 3: break;
 
                     default: Console.WriteLine("Write a correct option");
+                            Console.ReadLine();
                         break;
                 }
                 
