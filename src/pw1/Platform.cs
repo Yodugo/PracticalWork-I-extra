@@ -14,7 +14,7 @@ namespace PwI_Extra
         public Train currentTrain;
         public int dockingTime = 2;
 
-        public Platform(string id, PlatformStatus status, Train currentTrain, int dockingTime)
+        public Platform(string id)
         {
             this.id = id;
             this.status = status;
@@ -38,6 +38,13 @@ namespace PwI_Extra
         public int GetDockingTime()
         {
             return this.dockingTime;
+        }
+
+        public void AssignTrain(Train train)
+        {
+            currentTrain = train;
+            dockingTime = 2;
+            train.StartDocking();
         }
 
 

@@ -11,10 +11,11 @@ namespace PwI_Extra
     }
     public abstract class Train
     {
-        protected string id;
-        protected int arrivalTime;
-        protected string type;
-        protected TrainStatus status;
+        public string id;
+        public int arrivalTime;
+        public string type;
+        public TrainStatus status = TrainStatus.EnRoute;
+        public int dockingTicks;
 
         public Train(string id, int arrivalTime, string type, TrainStatus status)
         {
@@ -23,7 +24,7 @@ namespace PwI_Extra
             this.type = type;
             this.status = status;
         }
-    
+
 
         public string GetId()
         {
@@ -41,6 +42,33 @@ namespace PwI_Extra
         {
             return this.status;
         }
+
+        public void StartDocking()
+        {
+            status = TrainStatus.Docking;
+            dockingTicks = 2;
+        }
+        
+        public void Tick()
+        {
+            if (status == TrainStatus.EnRoute && arrivalTime > 0)
+            {
+                arrivalTime -= 15;
+                if (arrivalTime < 0)
+                {
+                    arrivalTime = 0;
+                }
+            }
+            else if (status == TrainStatus.Docking)
+            {
+                dockingTicks--;
+                if (dockingTicks <= 0)
+                {
+                    status = TrainStatus.Docked;
+                }
+            }
+        }
+
 
 
 
