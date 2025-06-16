@@ -136,11 +136,60 @@ namespace PwI_Extra
                         if (platform.dockingTime <= 0 && platform.currentTrain.status == TrainStatus.Docked)
                         {
                             platform.currentTrain = null;
+                            platform.status = PlatformStatus.Free;
                         }
                     }
                 }
 
             }
+        }
+        public void LoadFromFile()
+        {
+            string path = "Trains.csv";
+            if (!File.Exists(path))
+            {
+                Console.WriteLine("The file 'Trains.csv' was not found.");
+                return;
+            }
+            var lines = File.ReadAllLines(path);
+            Trains.Clear();
+            for (int i = 1; i < lines.Length; i++)
+            {
+                var line = lines[i];
+
+                try
+                {
+                    string[] parts = line.Split(',');
+
+                    string id = parts[0];
+                    int arrivalTime = int.Parse(parts[1]);
+                    string type = parts[2].ToLower();
+
+                    if (type == "passenger")
+                    {
+                        int carriages = int.Parse(parts[3]);
+                        int capacity = int.Parse(parts[4]);
+                        Trains.Add(new PassengerTrain(id, arrivalTime, type, TrainStatus.EnRoute, carriages, capacity));
+                    }
+                    else if (type == "freight")
+                    {
+                        int maxWeight = int.Parse(parts[3]);
+                        string freight = parts[4];
+                        Trains.Add(new FreightTrain(id, arrivalTime, type, TrainStatus.EnRoute, maxWeight, freight));
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Unknown train type: {type} in line {i + 1}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error processing line {i + 1}: {line}");
+                    Console.WriteLine($"{ex.Message}");
+                }
+            }
+            Console.WriteLine("Trains loaded successfully from 'Trains.csv'.\n");
+
         }
 
 

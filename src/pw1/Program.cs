@@ -7,6 +7,7 @@ namespace PwI_Extra
         public static void Main()
         {
             int option = 0;
+            Station station = new Station();
 
             do
             {
@@ -29,7 +30,7 @@ namespace PwI_Extra
                 switch (option)
                 {
                     case 1:
-                        Console.WriteLine("Loading trains...");
+                        station.LoadFromFile();
                         Console.ReadLine();
                         break;
 
@@ -40,11 +41,12 @@ namespace PwI_Extra
 
                     case 3: break;
 
-                    default: Console.WriteLine("Write a correct option");
-                            Console.ReadLine();
+                    default:
+                        Console.WriteLine("Write a correct option");
+                        Console.ReadLine();
                         break;
                 }
-                
+
 
             } while (option != 3);
         }
