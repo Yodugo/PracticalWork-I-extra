@@ -53,6 +53,7 @@ namespace PwI_Extra
             currentTrain = train;
             dockingTime = 2;
             train.StartDocking();
+            status = PlatformStatus.Occupied;
         }
 
 

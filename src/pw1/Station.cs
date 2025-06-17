@@ -123,33 +123,29 @@ namespace PwI_Extra
                 }
             }
 
-            // 4. Tick platforms (update docking progress and free when done)
+            // 4. Tick platforms (update docking progress)
             foreach (var platform in Platforms)
             {
-                if (platform.status == PlatformStatus.Occupied)
+                if (platform.currentTrain != null)
                 {
-                    platform.dockingTime--;
+                    platform.currentTrain.Tick();
 
-                    if (platform.currentTrain != null)
+                    if (platform.currentTrain.status == TrainStatus.Docked)
                     {
-                        platform.currentTrain.Tick();
-
-                        if (platform.dockingTime <= 0 && platform.currentTrain.status == TrainStatus.Docked)
-                        {
-                            platform.currentTrain = null;
-                            platform.status = PlatformStatus.Free;
-                        }
+                        // Mark platform as Occupied (still holding the docked train)
+                        platform.status = PlatformStatus.Occupied;
                     }
                 }
-
             }
+
         }
         public void LoadFromFile()
         {
-            string path = "Trains.csv";
+            Console.Write("Write the name of the file: ");
+            string path = Console.ReadLine();
             if (!File.Exists(path))
             {
-                Console.WriteLine("The file 'Trains.csv' was not found.");
+                Console.WriteLine($"The file '{path}' was not found.");
                 return;
             }
             var lines = File.ReadAllLines(path);
@@ -216,7 +212,7 @@ namespace PwI_Extra
             while (!AllTrainsDocked())
             {
                 Console.WriteLine($" Tick number {tickCount + 1} - Press Enter to advance 15 minutes...");
-                Console.ReadLine(); 
+                Console.ReadLine();
 
                 AdvanceTick();      // Advance simulation by one tick (15 minutes)
                 DisplayStatus();    // Show current system status
@@ -227,6 +223,7 @@ namespace PwI_Extra
 
             Console.WriteLine(" All trains are now in 'Docked' status.\n");
             Console.WriteLine($"Total simulation ticks: {tickCount}");
+            Console.ReadLine();
         }
 
 

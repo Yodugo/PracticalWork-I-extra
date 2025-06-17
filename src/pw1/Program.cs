@@ -6,10 +6,12 @@ namespace PwI_Extra
     {
         public static void Main()
         {
+            
             int platformCount = 0;
 
             while (platformCount <= 0)
             {
+                Console.Clear();
                 Console.Write("Enter the number of platforms to create: ");
                 platformCount = int.Parse(Console.ReadLine());
 
