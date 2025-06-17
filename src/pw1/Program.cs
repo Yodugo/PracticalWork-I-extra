@@ -6,8 +6,26 @@ namespace PwI_Extra
     {
         public static void Main()
         {
+            int platformCount = 0;
+
+            while (platformCount <= 0)
+            {
+                Console.Write("Enter the number of platforms to create: ");
+                platformCount = int.Parse(Console.ReadLine());
+
+
+                
+            }
+
             int option = 0;
             Station station = new Station();
+            station.Platforms = new List<Platform>();
+
+            for (int i = 0; i < platformCount; i++)
+            {
+                station.Platforms.Add(new Platform("P" + i));
+            }
+
 
             do
             {
@@ -36,6 +54,7 @@ namespace PwI_Extra
 
                     case 2:
                         Console.WriteLine("Starting Simulation...");
+                        station.RunSimulation();
                         Console.ReadLine();
                         break;
 

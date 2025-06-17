@@ -13,6 +13,7 @@ namespace PwI_Extra
         }
         public void DisplayStatus()
         {
+            Console.Clear();
             Console.WriteLine("=====Train Status=====");
             Console.WriteLine();
             foreach (var train in Trains)
@@ -36,7 +37,7 @@ namespace PwI_Extra
                     time = "Docked";
                 }
 
-                Console.WriteLine($"Train {train.id} - Status: {train.status} - {time}");
+                Console.WriteLine($"Train {train.id}   Status: {train.status} - {time}");
             }
 
             Console.WriteLine("\n====Platform Status====");
@@ -191,6 +192,43 @@ namespace PwI_Extra
             Console.WriteLine("Trains loaded successfully from 'Trains.csv'.\n");
 
         }
+        public bool AllTrainsDocked()
+        {
+            foreach (var train in Trains)
+            {
+                if (train.Getstatus() != TrainStatus.Docked)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        public void RunSimulation()
+        {
+            if (Trains == null || Trains.Count == 0)
+            {
+                Console.WriteLine("No trains loaded. Simulation cannot start.\n");
+                return;
+            }
+
+            int tickCount = 0;
+
+            while (!AllTrainsDocked())
+            {
+                Console.WriteLine($" Tick number {tickCount + 1} - Press Enter to advance 15 minutes...");
+                Console.ReadLine(); 
+
+                AdvanceTick();      // Advance simulation by one tick (15 minutes)
+                DisplayStatus();    // Show current system status
+
+                tickCount++;
+                Console.WriteLine("---------------------------------------------\n");
+            }
+
+            Console.WriteLine(" All trains are now in 'Docked' status.\n");
+            Console.WriteLine($"Total simulation ticks: {tickCount}");
+        }
+
 
 
     }
